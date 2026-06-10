@@ -1,0 +1,61 @@
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+.Python
+*.egg-info/
+dist/
+build/
+.venv/
+.pdm-python
+.pdm-build/
+pdm.lock
+*.egg
+
+# Coverage
+.coverage
+htmlcov/
+coverage.xml
+.pytest_cache/
+
+# TensorRT / Model weights (device-bound, do not commit)
+*.engine
+*.trt
+models/best_v6.onnx
+models/best_v6.pt
+# Use Git LFS for large model files if needed
+
+# Kaggle notebook outputs
+notebook*.ipynb
+
+# Environment
+.env
+.env.*
+*.pem
+*.key
+
+# IDE
+.vscode/
+.idea/
+*.swp
+
+# OS
+.DS_Store
+Thumbs.db
+
+# tegrastats / benchmark logs (go into test artifacts zip)
+tegrastats.log
+utilization.csv
+latency_results.csv
+
+# Report build artifacts (commit final PDFs only)
+report/*.aux
+report/*.log
+report/*.toc
+
+# Docker
+.docker/
+
+# ASP runtime files (not committed)
+.asp-test-result.json
+.asp-bypass-log.json

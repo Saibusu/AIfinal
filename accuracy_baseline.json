@@ -1,0 +1,25 @@
+{
+  "model": "waste_sorter_v6",
+  "base_model": "yolo26m",
+  "precision": "FP16",
+  "imgsz": 416,
+  "dataset": "roboflow_5class (projectverba/yolo-waste-detection v1)",
+  "test_set_size": 546,
+  "training_epochs": 80,
+  "note": "Baseline to be updated after first Jetson TensorRT FP16 evaluation. CI accuracy gate uses mAP50 >= baseline - 0.05 (5pt tolerance).",
+  "metrics": {
+    "mAP50": null,
+    "mAP50-95": null,
+    "precision": null,
+    "recall": null,
+    "per_class": {
+      "0_pet_bottle": null,
+      "1_aluminum_can": null,
+      "2_paper_container": null,
+      "3_plastic_bag": null,
+      "4_general_waste": null
+    }
+  },
+  "last_updated": "2026-06-11",
+  "updated_by": "pending_first_jetson_run"
+}
