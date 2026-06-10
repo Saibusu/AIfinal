@@ -1,0 +1,43 @@
+# Copyright (c) 2026 李軒杰, 黃義鈞
+# Datung University — I4210 AI實務專題
+#
+# CI skeleton (ADR-003, W12 milestone): lint + test on GitHub-hosted runner.
+# Later stages (security-scan, build, integration-test on self-hosted Jetson)
+# will be added per ADR-003 as the implementation progresses.
+
+name: CI
+
+on:
+  push:
+    branches: [master, main]
+  pull_request:
+
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Install PDM
+        run: pipx install pdm
+      - name: Install dependencies
+        run: pdm install -d
+      - name: Ruff lint
+        run: pdm run ruff check src/ tests/ conftest.py
+
+  test:
+    runs-on: ubuntu-latest
+    needs: lint
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Install PDM
+        run: pipx install pdm
+      - name: Install dependencies
+        run: pdm install -d
+      - name: Pytest with coverage gate (>= 90%)
+        run: pdm run pytest

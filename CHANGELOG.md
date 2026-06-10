@@ -6,6 +6,12 @@
 ## [Unreleased]
 
 ### Added
+- **SPEC-004 + DecisionEngine（首個生產模組，TDD）**
+  - `src/decision_engine.py`：Decide 階段純邏輯（class 對應 + 信心閾值 + 低信心防呆）
+  - `tests/test_decision_engine.py`：14 個測試，覆蓋率 100%
+  - ASP 流程：G2（SPEC）✅ → G3（紅燈）✅ → G4（綠燈）✅
+- **CI 骨架** `.github/workflows/ci.yml`：lint（ruff）+ test（pytest, cov≥90%）on hosted runner（ADR-003 / W12 里程碑）
+- `conftest.py`、`src/__init__.py`（package 骨架）
 - 專案 ASP 初始化（v4.3.0，type=system，level=L3）
 - 完整目錄結構（src/tests/deploy/calibration/data/scripts/report/notebooks/.github）
 - 核心文件：README.md、CONTEXT.md、docs/README.md（文件索引）
@@ -24,6 +30,7 @@
   - GPIO 針腳改用 Yahboom 套裝編號（BOARD 模式）
   - 資料集由「自建 300–500 張」→ Roboflow 公開資料集（13,104 張）
 - 三份 ADR 經人類核准：Draft → Accepted（2026-06-11）
+- 相依分層：核心 deps 輕量化，重量級執行期套件（ultralytics/opencv/fastapi）移至 optional extras（inference / dashboard）
 
 ### 決策對應（Traceability）
 | 項目 | 文件 | Gate |

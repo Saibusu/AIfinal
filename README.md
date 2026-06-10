@@ -27,16 +27,23 @@
 ## 快速開始
 
 ```bash
-# 安裝相依套件（PDM）
-pdm install
+# 安裝核心相依 + 開發工具（輕量，純邏輯測試足夠）
+pdm install -d
 
-# 執行測試
+# 執行測試（覆蓋率 gate ≥ 90%）
 pdm run pytest
+
+# 需要實際推論 / Dashboard 時，額外安裝對應 extras：
+pdm install -G inference   # ultralytics, opencv（YOLO 推論）
+pdm install -G dashboard   # fastapi, uvicorn（Web Dashboard）
 
 # Docker（Jetson 上）— 待 ADR-003 實作後填入
 # docker pull ghcr.io/saibusu/aifinal:latest
 # docker run --runtime nvidia ghcr.io/saibusu/aifinal:latest
 ```
+
+> 相依分層：核心（paho-mqtt, pyyaml）保持輕量讓 CI 快速；重量級執行期套件
+> （torch/opencv/fastapi）放在 optional extras，測試於邊界 mock（見 pyproject.toml）。
 
 ## MQTT Topic Map
 
