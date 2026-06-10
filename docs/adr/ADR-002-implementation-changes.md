@@ -71,9 +71,24 @@
 2. 使用 BOARD 模式（物理針腳）而非 BCM 模式，確保與 Yahboom 文件一致
 3. GPIO 針腳統一在 `src/actuator_controller.py` 管理，方便未來調整
 
+### 研究確認（2026-06-11）
+- **BOARD 模式 = 40-pin header 物理腳位編號（1–40），對應 Raspberry Pi 物理排列**（NVIDIA Jetson.GPIO 文件 + Yahboom 官方硬體頁均確認為標準 40-pin header）。
+- 因此 **Pin 11/13/15/21/23 的物理位置在 Yahboom 與原版 Jetson Orin Nano 一致**；套件之間會不同的是 BCM/晶片編號，本專案不使用 → 針腳指派沿用標準即可。
+- 「原版不同」的疑慮主要落在 BCM 編號，對 BOARD 模式無影響。
+
+### 與舊專案 (AI-course) 接線圖的差異釐清
+舊 AI-course `hardware/wiring.md` 為 **6 類 + 蜂鳴器** 設計，已被本 ADR 取代：
+| | 舊 wiring.md（6 類）| 本專案（5 類）|
+|---|---|---|
+| 塑膠袋 | Pin 19（白, 100Ω）| **Pin 21**（白）|
+| 鋁箔包 | Pin 21（橙）| 已移除（併入一般垃圾）|
+| 蜂鳴器 | Pin 17 | 已取消 |
+> 本專案以 notebook 的 5 類針腳表為準（Pin 11/13/15/21/23），舊 wiring.md 僅作接線/測試指令參考。
+
 ### 注意事項
-- **待確認**：Yahboom 針腳對應需在實際硬體上驗證，如有差異應更新此 ADR
-- 測試環境使用 Mock GPIO，不依賴實際硬體
+- **仍待實機驗證**：在 Yahboom 上用 `Jetson.GPIO`（BOARD 模式）逐腳點燈確認（測試指令可參考 AI-course `hardware/wiring.md`）。
+- **電阻值**：藍/白 LED（Vf≈3.0V）建議 100Ω，其餘 220Ω（SPEC-002 將註明）。
+- 測試環境使用 Mock GPIO，不依賴實際硬體。
 
 ---
 

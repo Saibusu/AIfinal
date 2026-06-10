@@ -5,6 +5,15 @@
 
 ## [Unreleased]
 
+### Fixed / 影響分析（AI-course 舊專案）
+- **notebook 移除 AI-course 死連結**：Cell 3 原 `git clone Saibusu/AI-course` 改為純建立工作目錄；
+  確認訓練對 AI-course 程式碼零依賴（資料來自 Roboflow、權重來自 ultralytics、映射在 notebook 內）
+- **模型版本事實釐清**（docs/progress/2026-06-11-training-status.md）：
+  v6 訓練曾於 epoch 72 中斷（Kernel crash），**best_v6 從未產生**；舊 production 為 v5 (mAP 0.755)；
+  目前 Kaggle 重跑中，ADR-001 暫維持 v6 命名，待結果決定（fallback：v5）
+- **GPIO 針腳研究確認**（ADR-002）：BOARD 模式 = 物理腳位，Yahboom 與原版一致；
+  釐清與舊 wiring.md（6 類）的差異；藍/白 LED 電阻修正為 100Ω（SPEC-002）
+
 ### Added
 - **SPEC-004 + DecisionEngine（首個生產模組，TDD）**
   - `src/decision_engine.py`：Decide 階段純邏輯（class 對應 + 信心閾值 + 低信心防呆）
