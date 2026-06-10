@@ -5,6 +5,14 @@
 
 ## [Unreleased]
 
+### Added (planning)
+- **docs/ROADMAP.md**：對照 CAPSTONE_SUBMISSION.pdf 全部要求的完成度追蹤清單（整體 ~18%）
+
+### Changed (corrections 2026-06-11)
+- **電阻統一 220Ω**：5 顆 LED 全用 220Ω（修正先前藍/白 100Ω；SPEC-002 + ADR-002）
+- **模型版本鎖定 v6**：不論 mAP 是否 < v5 的 0.755，一律採 v6（v5 訓練亦不完全），
+  移除 v5 fallback（ADR-001 + training-status + memory）
+
 ### Fixed / 影響分析（AI-course 舊專案）
 - **notebook 移除 AI-course 死連結**：Cell 3 原 `git clone Saibusu/AI-course` 改為純建立工作目錄；
   確認訓練對 AI-course 程式碼零依賴（資料來自 Roboflow、權重來自 ultralytics、映射在 notebook 內）

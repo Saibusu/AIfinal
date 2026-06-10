@@ -27,6 +27,13 @@
 | [SPEC-002](specs/SPEC-002-actuator-controller.md) | GPIO 致動器控制器 (ActuatorController) | `src/actuator_controller.py` |
 | [SPEC-003](specs/SPEC-003-dashboard-server.md) | Dashboard 伺服器 (DashboardServer) | `src/dashboard_server.py` |
 
+## 進度與規劃
+
+| 文件 | 用途 |
+|------|------|
+| [ROADMAP.md](ROADMAP.md) | **期末要求完成度追蹤**（對照 CAPSTONE，逐項 checklist + 完成度）|
+| [progress/](progress/) | 進度紀錄（訓練狀態、里程碑）|
+
 ## 其他核心文件（專案根目錄）
 
 | 文件 | 用途 |

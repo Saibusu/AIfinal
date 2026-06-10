@@ -32,6 +32,10 @@
 - 匯出 ONNX（opset 12，simplify=True）→ TensorRT FP16 engine
 - engine 檔案不進版本控制（裝置綁定），需在目標裝置上重新編譯
 
+**版本鎖定（2026-06-11）：** 採用 `waste_sorter_v6`，**不採用舊 v5**（v5 訓練亦不完全）。
+即使 v6 mAP 低於 v5 的 0.755，仍以 v6 為準，無版本回退分支。詳見
+`docs/progress/2026-06-11-training-status.md`。
+
 ---
 
 ## 理由 (Rationale)

@@ -28,15 +28,20 @@
 - 重跑教訓：依舊紀錄，**訓練中途請勿 Cancel**，跑完 80 epochs 後直接在同一
   session 執行 Cell 7 匯出 ONNX，避免 Kernel crash。
 
-## 待辦與 fallback
+## 模型版本決策（2026-06-11 鎖定）
 
-- [ ] Kaggle 訓練完成 → 取得 `best.pt` 的 mAP@50
+> **決策：一律採用 v6，不採用 v5。**
+> 理由：v5 訓練本身也不完全（非完整、可信的 production 基準），因此即使 v6 的
+> mAP 低於 v5 的 0.755，仍以 v6 為準。**v5 不作為 fallback。**
+
+- v6 = 本專案唯一的 production 模型路線（YOLO26m，5 類，本 notebook 重跑）
+- ADR-001 的 `waste_sorter_v6` 命名**確定維持**，不再有版本變更分支
+
+## 待辦
+
+- [ ] Kaggle 訓練完成（重跑，跑滿 80 epochs，勿中途 Cancel）
+- [ ] 取得 `best_v6.pt` 的 mAP@50 與各類別指標
 - [ ] 填入 `accuracy_baseline.json`（目前為 null）
-- [ ] 若新訓練 mAP ≥ 0.755 → 採用為 production；ADR-001 維持 v6 命名
-- [ ] **Fallback**：若新訓練再次失敗或 < 0.755 → 改用 v5（需自 AI-course 取得
-      v5 權重與其訓練設定，並更新 ADR-001 / CONTEXT / baseline 為 v5）
+- [ ] 在 Yahboom 上轉 TensorRT FP16 engine 並實測 FPS / mAP
 
-## 對 ADR-001 的影響
-
-ADR-001（Accepted）目前以 `waste_sorter_v6` 命名。**暫不修改**，等本次 Kaggle
-訓練結果出爐再決定：成功則維持，失敗則依上述 fallback 走 v5 並更新 ADR。
+> 無論 mAP 數值為何，模型版本決策已定（v6），不因數值回頭改用 v5。
