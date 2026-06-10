@@ -35,3 +35,6 @@
 - **Draft ADR 不得有對應生產代碼**（ASP G1 鐵則）
 - **測試覆蓋率 ≥ 90%**，CI 強制執行（`--cov-fail-under=90`）
 - **文件語言**：技術文件用中文，程式碼 + CI/CD 用英文
+- **硬體目標 = Yahboom（Jetson Orin Nano 相容，arm64）**：最終系統必須在實機跑（Demo/integration-test/Docker 皆評分）。程式碼一律以 Yahboom 為目標撰寫（Jetson.GPIO BOARD 模式、CSI IMX219 GStreamer pipeline、TensorRT engine 在裝置編譯）
+- **開發/部署分工**：Claude 在 PC 寫程式碼 + Dockerfile + CI + mock 測試，並**附「Yahboom 實機操作指令」**；實機執行/驗證/抓數據（engine 編譯、GPIO 點燈、runner 註冊、tegrastats、docker run、Demo 錄製）由使用者在 Yahboom 上操作。實機相依步驟收錄於 `docs/runbook/`
+- **攝影機 = CSI IMX219**：用 GStreamer（`nvarguscamerasrc`），不可用 `cv2.VideoCapture(0)`；來源可由 env `CAMERA_SOURCE` 覆蓋

@@ -20,7 +20,7 @@
 
 ```python
 class InferenceNode:
-    def __init__(self, model_path: str, camera_id: int = 0,
+    def __init__(self, model_path: str, camera_source: str | None = None,
                  conf_threshold: float = 0.5, imgsz: int = 416) -> None: ...
     def start(self) -> None: ...
     def stop(self) -> None: ...
@@ -28,6 +28,19 @@ class InferenceNode:
     # result schema: {"class_id": int, "class_name": str, "confidence": float,
     #                 "bbox": [x1,y1,x2,y2], "timestamp": float}
 ```
+
+### 攝影機：CSI IMX219（依 ADR-002 硬體 / 使用者確認）
+
+Jetson/Yahboom 的 **CSI IMX219 不能用 `cv2.VideoCapture(0)`**，必須走 GStreamer pipeline：
+
+```
+nvarguscamerasrc sensor-id=0 ! video/x-raw(memory:NVMM),width=1280,height=720,framerate=30/1
+  ! nvvidconv ! video/x-raw,format=BGRx ! videoconvert ! video/x-raw,format=BGR ! appsink
+```
+
+- `camera_source` 預設使用上述 CSI pipeline；可透過 env var `CAMERA_SOURCE` 覆蓋
+  （例如測試時指向影片檔或 USB index），便於本機 mock 與 grader 重現。
+- 本機單元測試以 mock 取代 `cv2.VideoCapture` / pipeline，不依賴實體攝影機。
 
 ---
 
@@ -37,7 +50,7 @@ class InferenceNode:
 |------|------|
 | **Feature** | 即時垃圾分類推論（Sense → Process 階段） |
 | **User Story** | 系統持續擷取攝影機畫面，每幀執行 YOLO26m 推論，回傳最高信心分類結果 |
-| **Inputs** | CSI/USB 攝影機（OpenCV VideoCapture）；model_path（.engine 或 .onnx）；conf_threshold（預設 0.5） |
+| **Inputs** | CSI IMX219 攝影機（GStreamer nvarguscamerasrc pipeline，env `CAMERA_SOURCE` 可覆蓋）；model_path（.engine 或 .onnx）；conf_threshold（預設 0.5） |
 | **Outputs** | `detection_result` dict（class_id, class_name, confidence, bbox, timestamp）；若無有效偵測回傳 None |
 | **Rules** | 信心分數 < threshold → 回傳 class_id=4（一般垃圾）；同時只處理最高信心偵測；FPS ≥ 15 |
 | **Edge Cases** | 攝影機斷線 → 記錄 error + 重試 3 次 + graceful shutdown；無物件 → 回傳 None；多物件 → 取最高信心 |

@@ -7,6 +7,11 @@
 
 ### Added (planning)
 - **docs/ROADMAP.md**：對照 CAPSTONE_SUBMISSION.pdf 全部要求的完成度追蹤清單（整體 ~18%）
+- **docs/runbook/**：Yahboom 實機操作指令清單（engine 編譯 / GPIO 點燈 / CSI 攝影機 / tegrastats / runner / docker）
+
+### Decided (hardware target 2026-06-11)
+- **硬體目標確認 = Yahboom 實機**（arm64）；開發/部署分工：Claude 寫碼+指令，使用者在實機執行驗證（CLAUDE.md）
+- **攝影機 = CSI IMX219**：InferenceNode 用 GStreamer nvarguscamerasrc pipeline，env `CAMERA_SOURCE` 可覆蓋（SPEC-001）
 
 ### Changed (corrections 2026-06-11)
 - **電阻統一 220Ω**：5 顆 LED 全用 220Ω（修正先前藍/白 100Ω；SPEC-002 + ADR-002）
