@@ -1,0 +1,3 @@
+# GitHub Actions workflows（見 ADR-003）
+# ci.yml — 5-stage pipeline（lint→test→security→build→integration-test）
+# deploy.yml — tag-triggered 部署（選用）
