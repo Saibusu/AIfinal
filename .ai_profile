@@ -1,0 +1,12 @@
+type: system
+level: 3
+mode: auto
+workflow: standard
+hitl: standard
+rag: disabled
+guardrail: enabled
+autonomous: disabled
+orchestrator: disabled
+autopilot: disabled
+coding_style: enabled
+name: final

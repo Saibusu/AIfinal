@@ -1,0 +1,39 @@
+{
+  "hooks": {
+    "SessionStart": [
+      {
+        "hooks": [
+          {
+            "command": "bash \"C:/Users/user/.claude/asp/hooks/clean-allow-list.sh\"",
+            "type": "command"
+          },
+          {
+            "command": "bash \"C:/Users/user/.claude/asp/hooks/session-audit.sh\"",
+            "type": "command"
+          }
+        ]
+      }
+    ]
+  },
+  "permissions": {
+    "ask": [
+      "Bash(docker deploy *)",
+      "Bash(docker push *)",
+      "Bash(gh pr merge *)",
+      "Bash(gh pr merge)",
+      "Bash(git push *)",
+      "Bash(git push --force *)",
+      "Bash(git push -f *)",
+      "Bash(git push origin main *)",
+      "Bash(git push origin main)",
+      "Bash(git push)",
+      "Bash(git rebase *)",
+      "Bash(git rebase)",
+      "Bash(rm -r *)",
+      "Bash(rm -rf *)"
+    ],
+    "allow": [
+      "Bash(*)"
+    ]
+  }
+}
