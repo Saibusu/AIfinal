@@ -2,7 +2,7 @@
 
 | 欄位 | 內容 |
 |------|------|
-| **Status** | Draft |
+| **Status** | Accepted |
 | **Date** | 2026-06-11 |
 | **Authors** | 李軒杰 (I4A70), 黃義鈞 (I4B58) |
 | **Supersedes** | — |
@@ -77,4 +77,4 @@
 
 ---
 
-> **注意**：Status 為 Draft，未經人類核准前不得有對應生產代碼。
+> **注意**：Status 已由人類核准為 **Accepted**（2026-06-11）。後續變更須新增 superseding ADR，不可直接改寫已核准的決策內容。
