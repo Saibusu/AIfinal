@@ -26,6 +26,8 @@
 | [SPEC-001](specs/SPEC-001-inference-pipeline.md) | 推論管線 (InferenceNode) | `src/inference_node.py` |
 | [SPEC-002](specs/SPEC-002-actuator-controller.md) | GPIO 致動器控制器 (ActuatorController) | `src/actuator_controller.py` |
 | [SPEC-003](specs/SPEC-003-dashboard-server.md) | Dashboard 伺服器 (DashboardServer) | `src/dashboard_server.py` |
+| [SPEC-004](specs/SPEC-004-decision-engine.md) | 決策引擎 (DecisionEngine) | `src/decision_engine.py` |
+| [SPEC-005](specs/SPEC-005-mqtt-publisher.md) | MQTT 發布器 (MqttPublisher) | `src/mqtt_publisher.py` |
 
 ## 進度與規劃
 

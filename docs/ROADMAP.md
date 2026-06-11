@@ -9,7 +9,7 @@
 | 項目 | 狀態 |
 |------|------|
 | **交期** | 2026-06-19 23:59（TronClass / iLearn）|
-| **整體完成度（可評分產出）** | 約 **24%** |
+| **整體完成度（可評分產出）** | 約 **28%** |
 | **ASP Gate** | G1✅ G2✅ G3✅ G4✅（僅 DecisionEngine 一個模組走完）|
 | **模型** | ✅ 訓練完成 waste_sorter_v6，mAP@50=0.731（> 目標 0.65）|
 | **最大風險** | Docker、5-stage CI、Self-hosted runner、報告、Demo 全未開始；硬體未到位 |
@@ -85,7 +85,7 @@ DAG：`lint → test ┐ / security-scan ┘ → build → integration-test`
 ## B.5 — 測試（3 pts，5 類別，覆蓋率 ≥90%）
 
 - [x] **單元測試：推論邏輯**（DecisionEngine + InferenceNode 已做 ✅）
-- [ ] **單元測試：MQTT 訊息**（publish/subscribe, schema, retry）
+- [x] **單元測試：MQTT 訊息**（MqttPublisher：publish, schema, retry ✅）
 - [ ] **Accuracy gate**（held-out vs accuracy_baseline.json）
 - [ ] **整合測試**（真實 Jetson：camera+推論+LED）
 - [x] **Coverage gate**（CI 強制 ≥90%）✅
@@ -131,9 +131,9 @@ DAG：`lint → test ┐ / security-scan ┘ → build → integration-test`
 |------|------|-------|------|------|
 | DecisionEngine | SPEC-004 ✅ | ✅ | ✅ 14 tests/100% | G4 ✅ |
 | InferenceNode | SPEC-001 ✅ | ✅ | ✅ 15 tests/100% | G4 ✅ |
+| MqttPublisher | SPEC-005 ✅ | ✅ | ✅ 8 tests/100% | G4 ✅ |
 | ActuatorController | SPEC-002 ✅ | ⬜ | ⬜ | — |
 | DashboardServer | SPEC-003 ✅ | ⬜ | ⬜ | — |
-| MqttPublisher | ⬜（需 SPEC-005）| ⬜ | ⬜ | — |
 
 ---
 

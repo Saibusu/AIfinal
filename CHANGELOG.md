@@ -6,6 +6,10 @@
 ## [Unreleased]
 
 ### Added (modules)
+- **MqttPublisher (SPEC-005, TDD)**：`src/mqtt_publisher.py`，發布 detection/status 到 MQTT
+  - JSON schema 驗證、publish 重試、topic prefix；paho client 可注入（測試不連 broker）
+  - 8 tests，覆蓋率 100%；滿足 CAPSTONE §B.5「MQTT 訊息測試」類別
+  - 註：提案原列 MQTT 為選用，CAPSTONE 要求故正式納入
 - **InferenceNode (SPEC-001, TDD)**：`src/inference_node.py`，Sense+Process 階段
   - CSI IMX219 GStreamer pipeline builder、YOLO 結果解析、選最高信心 → DecisionEngine、相機重試
   - 重量級 deps（ultralytics/opencv）lazy import；測試以 mock model 注入，無硬體依賴
