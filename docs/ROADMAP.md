@@ -21,8 +21,8 @@
 | A | 課堂簡報（Part A）| 10 | ⬜ | 0% |
 | B1 | Repo 結構 & file headers | 2 | 🟡 | 60% |
 | B2 | 原始碼合規（one class/file, 型別, ruff）| 3 | 🟡 | 40% |
-| B3 | Docker image 在 Jetson 執行 | 2 | 🟡 | 70%（Dockerfile/compose/entrypoint 完成，待實機 run）|
-| B4 | CI/CD 5-stage | 5 | 🟡 | 80%（5 stage 全寫完，待 runner 註冊跑通）|
+| B3 | Docker image 在 Jetson 執行 | 2 | 🟡 | 80%（CI build ✅ arm64 image 已推 GHCR；待實機 docker run）|
+| B4 | CI/CD 5-stage | 5 | 🟡 | 90%（4/5 stage CI 實測綠；integration-test 待 runner）|
 | B5 | 測試廣度 & 覆蓋率 ≥90% | 3 | 🟡 | 20%（baseline 已有數據）|
 | B6 | 期末報告 PDF（10 章）| 3 | ⬜ | 0% |
 | B7 | Demo 影片 | 1 | ⬜ | 0% |
@@ -73,11 +73,11 @@
 ## B.4 — CI/CD 5-stage（5 pts）
 
 DAG：`lint → test ┐ / security-scan ┘ → build → integration-test`
-- [x] **lint**（ruff，hosted）✅
-- [x] **test**（pytest --cov-fail-under=90，hosted）✅
-- [x] **security-scan**（bandit medium gate + pip-audit，hosted）✅
-- [x] **build**（docker buildx arm64 → GHCR :latest + :sha-<commit>，GHA cache）✅
-- [x] **integration-test**（self-hosted Jetson runner；job 已寫，待 runner）✅
+- [x] **lint**（ruff，hosted）✅ CI 實測綠
+- [x] **test**（pytest --cov-fail-under=90，hosted）✅ CI 實測綠（修 fastapi dev-dep 後）
+- [x] **security-scan**（bandit medium gate + pip-audit，hosted）✅ CI 實測綠
+- [x] **build**（docker buildx arm64 → GHCR :latest + :sha-<commit>，GHA cache）✅ CI 實測綠，映像已推 GHCR
+- [x] **integration-test**（self-hosted Jetson runner；job 已寫，CI 顯示 queued 待 runner）⏳
 - [x] 觸發條件含 pull_request + push-to-main ✅
 - [ ] Self-hosted Yahboom runner 註冊並顯示 Idle（⏳ 實機）
 - [x] rollback.sh（讀 .last_tag，docker compose 快速切換，目標 <30s）✅；deploy.yml 審核 gate（選用，未做）
