@@ -38,6 +38,9 @@ dev = [
     "httpx>=0.27",
     "bandit>=1.7",
     "pip-audit>=2.7",
+    # fastapi is a runtime extra (dashboard) but the dashboard UNIT tests import
+    # it at collection time, so it must also be present to run the test suite.
+    "fastapi>=0.110",
 ]
 
 [tool.ruff]

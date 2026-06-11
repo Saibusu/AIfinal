@@ -5,6 +5,15 @@
 
 ## [Unreleased]
 
+### Fixed (CI)
+- **CI test job 紅燈：`ModuleNotFoundError: No module named 'fastapi'`**（自 CI #11 起）
+  - 根因：dashboard 單元測試在 collection 時 import `fastapi`（經 `src/dashboard_server.py`），
+    但 `fastapi` 只宣告在 `[project.optional-dependencies] dashboard`（extra），
+    CI 的 `pdm install -d` 只裝 dev group → 測試環境缺 fastapi
+  - 修正：將 `fastapi>=0.110` 加入 dev-dependencies（測試環境必須能 import 受測模組）
+  - 驗證：以乾淨 venv 模擬 CI dev-only 安裝，**先重現**同一錯誤、加入 fastapi 後**全綠**（80 passed / 100%）
+  - 教訓：本機曾手動 `pip install fastapi` 遮蔽了缺漏宣告 → 本機綠 ≠ CI 綠
+
 ### Added (runtime + containerization)
 - **PipelineOrchestrator (SPEC-007, TDD)**：`src/pipeline_orchestrator.py`，串起完整迴路
   - frame → InferenceNode(Sense+Process+Decide) → ActuatorController(Act) → MqttPublisher → on_event(Dashboard)
