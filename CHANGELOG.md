@@ -5,6 +5,20 @@
 
 ## [Unreleased]
 
+### Changed (consistency + compliance)
+- **DEMO/ runtime 收斂為單一真相**：`DEMO/main.py` 由 392 行單檔重複實作 → 改為
+  ~20 行薄啟動器（`sys.path` + `from src.app import main`）。bare-metal 一鍵 `bash run.sh`
+  行為不變，但現在跑的就是被單元測試 + CI 保證的 `src/` 程式
+  - **收斂時抓到重複版已漂移的真實 bug**：舊 DEMO 設 `server._frame/_fps`，但
+    `DashboardServer` 實際欄位是 `_frame_source/_fps_source` → 舊 DEMO 的影像流/FPS
+    其實是壞的（永遠 503 / 0）。這正是「demo 跑的程式 ≠ 測試保證的程式」的風險實例
+  - `DEMO/requirements.txt` 版本對齊 pyproject（`paho-mqtt` 1.6→2.0、全部釘 major）
+- **依賴釘 major（§B.2）**：`pyproject.toml` 全部相依由開放 `>=` 改為釘到 major
+  （`paho-mqtt>=2.0,<3`、`fastapi>=0.110,<1`、`ultralytics>=8.0,<9` …）。
+  pytest/pytest-cov 上界放寬到 `<10`/`<8` 以容納 CI 已解析的 9.x/7.x（無 lockfile，避免強制降版）
+  - ⚠️ 已知待驗（on-device）：`src/mqtt_publisher._build_client` 用 `mqtt.Client()` 無參數，
+    paho-mqtt 2.0 需 `CallbackAPIVersion` → 啟用 MQTT 時實機需驗證/修正（屬 pragma no-cover 路徑）
+
 ### Added (model artifacts)
 - **best_v6 權重下載並歸檔**：`models/best_v6.pt`(42MB) + `models/best_v6.onnx`(77.9MB, opset 12, imgsz 416)
   - 兩檔 gitignored（device-bound + 大檔，不入版控）；新增 `models/README.md` 模型卡（mAP/速度/取得方式/engine 編譯）

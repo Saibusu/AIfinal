@@ -1,6 +1,7 @@
 # Copyright (c) 2026 李軒杰, 黃義鈞 / Datung University — I4210 AI實務專題
-# Jetson JetPack 6 已內建 opencv-python、Jetson.GPIO；其餘用 pip 安裝
-fastapi>=0.110
-uvicorn[standard]>=0.29
-ultralytics>=8.0
-paho-mqtt>=1.6
+# Jetson JetPack 6 已內建 opencv-python、Jetson.GPIO；其餘用 pip 安裝。
+# 版本與根目錄 pyproject.toml 對齊（釘 major，§B.2）。
+fastapi>=0.110,<1
+uvicorn[standard]>=0.29,<1
+ultralytics>=8.0,<9
+paho-mqtt>=2.0,<3

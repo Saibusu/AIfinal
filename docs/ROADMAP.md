@@ -20,7 +20,7 @@
 |---|---------|-----|------|-------|
 | A | 課堂簡報（Part A）| 10 | ⬜ | 0% |
 | B1 | Repo 結構 & file headers | 2 | 🟡 | 60% |
-| B2 | 原始碼合規（one class/file, 型別, ruff）| 3 | 🟡 | 40% |
+| B2 | 原始碼合規（one class/file, 型別, ruff）| 3 | 🟡 | 70%（含依賴釘 major ✅）|
 | B3 | Docker image 在 Jetson 執行 | 2 | 🟡 | 80%（CI build ✅ arm64 image 已推 GHCR；待實機 docker run）|
 | B4 | CI/CD 5-stage | 5 | 🟡 | 90%（4/5 stage CI 實測綠；integration-test 待 runner）|
 | B5 | 測試廣度 & 覆蓋率 ≥90% | 3 | 🟡 | 20%（baseline 已有數據）|
@@ -59,7 +59,7 @@
 - [x] 一檔一主類別（DecisionEngine ✅）
 - [x] PDM 管理；ruff + pytest + pytest-cov dev deps
 - [x] `[tool.coverage.run]` + `[tool.pytest.ini_options]` 與 `--cov-fail-under=90` 一致
-- [ ] **相依釘選到 major 版本**（目前用 `>=`，需確認符合「pinned to a major version」）
+- [x] **相依釘選到 major 版本** ✅（pyproject 全部相依 `>=X,<nextmajor`；DEMO/requirements 對齊）
 - [x] public 方法型別註解 + docstring（DecisionEngine ✅；其餘模組待寫）
 
 ## B.3 — Docker Image（2 pts）
