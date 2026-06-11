@@ -18,6 +18,13 @@
 - **模型版本鎖定 v6**：不論 mAP 是否 < v5 的 0.755，一律採 v6（v5 訓練亦不完全），
   移除 v5 fallback（ADR-001 + training-status + memory）
 
+### Fixed (notebook 訓練 bug)
+- **Cell 6 best.pt 路徑修正**：原寫死相對路徑 `runs/train/waste_sorter_v6/weights/best.pt`
+  導致 Kaggle 上 `FileNotFoundError`（ultralytics 實際 save_dir 不同）。改用
+  `model.trainer.best`（+ rglob fallback），訓練完成後可靠定位權重
+- **Cell 7 ONNX 匯出**：改用 `model.export()` 回傳路徑，不再用 glob 猜
+- 安全提醒：跑用的 notebook8d444b22b9.ipynb 含硬編碼 Roboflow key（已 gitignore 不入版控；建議輪替金鑰）
+
 ### Fixed / 影響分析（AI-course 舊專案）
 - **notebook 移除 AI-course 死連結**：Cell 3 原 `git clone Saibusu/AI-course` 改為純建立工作目錄；
   確認訓練對 AI-course 程式碼零依賴（資料來自 Roboflow、權重來自 ultralytics、映射在 notebook 內）
