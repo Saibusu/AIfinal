@@ -5,6 +5,12 @@
 
 ## [Unreleased]
 
+### Added (modules)
+- **InferenceNode (SPEC-001, TDD)**：`src/inference_node.py`，Sense+Process 階段
+  - CSI IMX219 GStreamer pipeline builder、YOLO 結果解析、選最高信心 → DecisionEngine、相機重試
+  - 重量級 deps（ultralytics/opencv）lazy import；測試以 mock model 注入，無硬體依賴
+  - 15 tests，模組覆蓋率 100%；G2→G3→G4 完成
+
 ### Added (planning)
 - **docs/ROADMAP.md**：對照 CAPSTONE_SUBMISSION.pdf 全部要求的完成度追蹤清單（整體 ~18%）
 - **docs/runbook/**：Yahboom 實機操作指令清單（engine 編譯 / GPIO 點燈 / CSI 攝影機 / tegrastats / runner / docker）
