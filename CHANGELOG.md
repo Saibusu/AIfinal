@@ -6,6 +6,12 @@
 ## [Unreleased]
 
 ### Added (modules)
+- **DashboardServer (SPEC-003, TDD)**：`src/dashboard_server.py`，FastAPI + WebSocket 即時監控
+  - `/health`、`/`(HTML)、`/video_feed`(MJPEG multipart)、`/ws`(推播 detection/fps events)
+  - `ConnectionManager`：多客戶端 broadcast、斷線客戶端靜默移除；攝影機離線 → /video_feed 503
+  - frame_source / fps_source 注入 → 無需實機 CSI 相機即可單元測試（sync TestClient + asyncio.run）
+  - 10 tests，模組覆蓋率 100%；**5/5 軟體模組 TDD 全到齊**（G2→G3→G4）
+  - 移除未使用的 `pytest-asyncio` dev dep 與 `asyncio_mode` 設定（測試改用 TestClient + asyncio.run，清掉 config warning）
 - **ActuatorController (SPEC-002, TDD)**：`src/actuator_controller.py`，Act 階段 GPIO LED 控制
   - Yahboom BOARD 針腳（11/13/15/21/23）、互斥點燈、auto-off timer、無效 class→一般垃圾、env 針腳覆蓋
   - Jetson.GPIO lazy import + 注入 mock；timer_factory 注入避免測試 sleep；9 tests，覆蓋率 100%

@@ -9,10 +9,10 @@
 | 項目 | 狀態 |
 |------|------|
 | **交期** | 2026-06-19 23:59（TronClass / iLearn）|
-| **整體完成度（可評分產出）** | 約 **32%** |
-| **ASP Gate** | G1✅ G2✅ G3✅ G4✅（僅 DecisionEngine 一個模組走完）|
+| **整體完成度（可評分產出）** | 約 **35%** |
+| **ASP Gate** | G1✅ G2✅ G3✅ G4✅（5/5 軟體模組全走完 TDD）|
 | **模型** | ✅ 訓練完成 waste_sorter_v6，mAP@50=0.731（> 目標 0.65）|
-| **最大風險** | Docker、5-stage CI、Self-hosted runner、報告、Demo 全未開始；硬體未到位 |
+| **最大風險** | Dockerfile、CI build/security-scan、Self-hosted runner、報告、Demo 全未開始；硬體未到位 |
 
 ## 評分項目進度總覽（總分 30）
 
@@ -133,7 +133,7 @@ DAG：`lint → test ┐ / security-scan ┘ → build → integration-test`
 | InferenceNode | SPEC-001 ✅ | ✅ | ✅ 15 tests/100% | G4 ✅ |
 | MqttPublisher | SPEC-005 ✅ | ✅ | ✅ 8 tests/100% | G4 ✅ |
 | ActuatorController | SPEC-002 ✅ | ✅ | ✅ 9 tests/100% | G4 ✅ |
-| DashboardServer | SPEC-003 ✅ | ⬜ | ⬜ | — |
+| DashboardServer | SPEC-003 ✅ | ✅ | ✅ 10 tests/100% | G4 ✅ |
 
 ---
 
