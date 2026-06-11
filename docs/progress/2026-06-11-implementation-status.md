@@ -56,3 +56,26 @@
 
 G1 ✅（ADR-001/002/003 **Accepted**）｜G2 ✅（SPEC-001~007）｜G3/G4 ✅（7 單元全紅→綠）。
 G5（reality-check）/ G6（實機 smoke）待硬體階段。
+
+---
+
+## 更新（2026-06-12）
+
+完成度 **~45% → ~50%**。本日進展：
+
+- **CI 修綠**：test job 紅燈（`ModuleNotFoundError: fastapi`，自 CI #11）已修
+  （fastapi 加入 dev-deps）。run d46fde8：**lint/test/security-scan/build 4/5 實測綠**；
+  integration-test queued 待 self-hosted runner。arm64 映像已推 GHCR。
+- **模型權重下載歸檔**：`models/best_v6.pt`(42MB) + `best_v6.onnx`(77.9MB, opset12, imgsz416)，
+  gitignored；`models/README.md` 模型卡。`accuracy_baseline.json` 修 imgsz 640→416、inference 11.3ms。
+  → 解鎖 Yahboom engine 編譯。
+- **新增 `DEMO/main.py`**（另一 session）：392 行單檔 runtime（一鍵 `bash run.sh`）。
+  ⚠️ **與 `src/` 重複實作、零測試、已漂移**（DEMO paho-mqtt 1.6 vs src 2.0）。
+  **待決策**：建議 src/ 為正、DEMO 改薄包裝呼叫 src（避免「測試保證的程式 ≠ demo 跑的程式」）。
+
+### 仍缺（對照 30 分 rubric）
+- ⬜ 報告 PDF（B6, 3分）、簡報（A, 10分）、Demo 影片（B7, 1分）、artifacts zip（B8, 1分）
+- 🟡 B2 依賴釘 major（pyproject 核心仍 `>=`）
+- ⏳ 實機：runner 註冊、docker run、GPIO/CSI、tegrastats、test split mAP、on-device FPS/power
+- ❌ ASP G5 reality-check 未跑、G6 實機 smoke 未過
+- ⚠️ DEMO/src runtime 重複未收斂
