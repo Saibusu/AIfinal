@@ -18,6 +18,11 @@
 - **模型版本鎖定 v6**：不論 mAP 是否 < v5 的 0.755，一律採 v6（v5 訓練亦不完全），
   移除 v5 fallback（ADR-001 + training-status + memory）
 
+### Added (training result)
+- **模型訓練完成** waste_sorter_v6（Kaggle T4，76 epochs）：整體 mAP@50=**0.731**（> 目標 0.65）
+- `accuracy_baseline.json` 填入實際數值（validation split；含各類別 + 速度 + accuracy gate 門檻 0.681）
+- 已知弱點：塑膠袋 mAP50=0.52 / recall=0.436（防呆：低信心→一般垃圾）
+
 ### Fixed (notebook 訓練 bug)
 - **Cell 6 best.pt 路徑修正**：原寫死相對路徑 `runs/train/waste_sorter_v6/weights/best.pt`
   導致 Kaggle 上 `FileNotFoundError`（ultralytics 實際 save_dir 不同）。改用

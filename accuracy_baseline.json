@@ -1,25 +1,32 @@
 {
   "model": "waste_sorter_v6",
   "base_model": "yolo26m",
-  "precision": "FP16",
-  "imgsz": 416,
+  "precision": "FP32 (PyTorch, pre-TensorRT)",
+  "imgsz": 640,
   "dataset": "roboflow_5class (projectverba/yolo-waste-detection v1)",
-  "test_set_size": 546,
-  "training_epochs": 80,
-  "note": "Baseline to be updated after first Jetson TensorRT FP16 evaluation. CI accuracy gate uses mAP50 >= baseline - 0.05 (5pt tolerance).",
+  "epochs_completed": 76,
+  "metric_source": "validation split (1092 images) — TEST split (546) eval pending",
+  "note": "Baseline from Kaggle training 2026-06-11 (Tesla T4). Accuracy gate threshold = mAP50 - 0.05. TODO: replace with held-out TEST split numbers (run model.val(split='test')) and with on-device TensorRT FP16 numbers.",
+  "accuracy_gate": {
+    "metric": "mAP50",
+    "baseline": 0.731,
+    "tolerance": 0.05,
+    "min_pass": 0.681
+  },
   "metrics": {
-    "mAP50": null,
-    "mAP50-95": null,
-    "precision": null,
-    "recall": null,
+    "mAP50": 0.731,
+    "mAP50-95": 0.508,
+    "precision": 0.787,
+    "recall": 0.691,
     "per_class": {
-      "0_pet_bottle": null,
-      "1_aluminum_can": null,
-      "2_paper_container": null,
-      "3_plastic_bag": null,
-      "4_general_waste": null
+      "0_pet_bottle":      {"mAP50": 0.681, "precision": 0.738, "recall": 0.644},
+      "1_aluminum_can":    {"mAP50": 0.882, "precision": 0.879, "recall": 0.835},
+      "2_paper_container": {"mAP50": 0.781, "precision": 0.830, "recall": 0.784},
+      "3_plastic_bag":     {"mAP50": 0.520, "precision": 0.704, "recall": 0.436},
+      "4_general_waste":   {"mAP50": 0.754, "precision": 0.786, "recall": 0.750}
     }
   },
+  "speed_ms_per_image_T4": {"preprocess": 0.2, "inference": 11.9, "postprocess": 0.2},
   "last_updated": "2026-06-11",
-  "updated_by": "pending_first_jetson_run"
+  "updated_by": "waste_sorter_v6 (Kaggle T4, 76 epochs)"
 }

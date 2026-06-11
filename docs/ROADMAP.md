@@ -2,15 +2,16 @@
 
 > 對照 `docs/proposal/CAPSTONE_SUBMISSION.pdf` 全部要求。
 > 圖例：✅ 完成 ｜ 🟡 部分 ｜ ⬜ 未開始 ｜ ➖ 不適用
-> 最後更新：2026-06-11
+> 最後更新：2026-06-11（訓練完成 mAP 0.731）
 
 ## 摘要
 
 | 項目 | 狀態 |
 |------|------|
 | **交期** | 2026-06-19 23:59（TronClass / iLearn）|
-| **整體完成度（可評分產出）** | 約 **18%** |
+| **整體完成度（可評分產出）** | 約 **20%** |
 | **ASP Gate** | G1✅ G2✅ G3✅ G4✅（僅 DecisionEngine 一個模組走完）|
+| **模型** | ✅ 訓練完成 waste_sorter_v6，mAP@50=0.731（> 目標 0.65）|
 | **最大風險** | Docker、5-stage CI、Self-hosted runner、報告、Demo 全未開始；硬體未到位 |
 
 ## 評分項目進度總覽（總分 30）
@@ -22,7 +23,7 @@
 | B2 | 原始碼合規（one class/file, 型別, ruff）| 3 | 🟡 | 40% |
 | B3 | Docker image 在 Jetson 執行 | 2 | ⬜ | 0% |
 | B4 | CI/CD 5-stage | 5 | 🟡 | 30% |
-| B5 | 測試廣度 & 覆蓋率 ≥90% | 3 | 🟡 | 15% |
+| B5 | 測試廣度 & 覆蓋率 ≥90% | 3 | 🟡 | 20%（baseline 已有數據）|
 | B6 | 期末報告 PDF（10 章）| 3 | ⬜ | 0% |
 | B7 | Demo 影片 | 1 | ⬜ | 0% |
 | B8 | Test artifacts zip | 1 | ⬜ | 0% |
@@ -146,6 +147,6 @@ DAG：`lint → test ┐ / security-scan ┘ → build → integration-test`
 
 ## 外部依賴（阻擋項）
 
-- ⏳ Kaggle v6 訓練結果 → accuracy_baseline、報告 §6
-- ⏳ Yahboom 硬體到位 → GPIO 實測、整合測試、Docker on Jetson、tegrastats
+- ✅ Kaggle v6 訓練結果 → mAP@50=0.731，已填 accuracy_baseline（validation；test split 待補）
+- ⏳ Yahboom 硬體到位 → GPIO 實測、整合測試、Docker on Jetson、tegrastats、on-device mAP/FPS
 - ⏳ Self-hosted runner 註冊 → integration-test job

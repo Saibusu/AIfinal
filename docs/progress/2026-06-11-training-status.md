@@ -37,11 +37,22 @@
 - v6 = 本專案唯一的 production 模型路線（YOLO26m，5 類，本 notebook 重跑）
 - ADR-001 的 `waste_sorter_v6` 命名**確定維持**，不再有版本變更分支
 
+## ✅ 訓練完成結果（2026-06-11，Kaggle T4）
+
+- 76 epochs（patience=20 提早收斂，非中斷）；11.6 小時
+- **整體 mAP@50 = 0.731**（> ADR-001 目標 0.65 ✅）；mAP@50-95 = 0.508
+- 推論 11.9ms/張（T4，640）
+- 各類別 mAP50：鐵鋁罐 0.882｜紙餐盒 0.781｜一般垃圾 0.754｜寶特瓶 0.681｜**塑膠袋 0.52（弱，recall 0.436）**
+- 數據已填入 `accuracy_baseline.json`（來源：validation split 1092 張）
+
+> 存檔路徑 `runs/detect/runs/train/waste_sorter_v6`（ultralytics 自動加 runs/detect）—
+> 即先前 FileNotFoundError 主因，已用 `model.trainer.best` 修正。
+
 ## 待辦
 
-- [ ] Kaggle 訓練完成（重跑，跑滿 80 epochs，勿中途 Cancel）
-- [ ] 取得 `best_v6.pt` 的 mAP@50 與各類別指標
-- [ ] 填入 `accuracy_baseline.json`（目前為 null）
-- [ ] 在 Yahboom 上轉 TensorRT FP16 engine 並實測 FPS / mAP
+- [ ] 補跑 test split（546 張）的 mAP → 更新 baseline 為 test 數據
+- [ ] 下載 best_v6.pt / best_v6.onnx
+- [ ] 在 Yahboom 上轉 TensorRT FP16 engine 並實測 FPS / mAP（on-device 數據才是報告 §6 最終值）
+- [ ] 塑膠袋弱點 → 寫入報告 §6/§7（防呆機制接住：低信心→一般垃圾）
 
 > 無論 mAP 數值為何，模型版本決策已定（v6），不因數值回頭改用 v5。
