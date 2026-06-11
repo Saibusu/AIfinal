@@ -2,11 +2,13 @@
   "model": "waste_sorter_v6",
   "base_model": "yolo26m",
   "precision": "FP32 (PyTorch, pre-TensorRT)",
-  "imgsz": 640,
+  "imgsz": 416,
   "dataset": "roboflow_5class (projectverba/yolo-waste-detection v1)",
   "epochs_completed": 76,
+  "best_epoch": 56,
+  "weights": {"pt": "models/best_v6.pt", "onnx": "models/best_v6.onnx (opset 12, imgsz 416)"},
   "metric_source": "validation split (1092 images) — TEST split (546) eval pending",
-  "note": "Baseline from Kaggle training 2026-06-11 (Tesla T4). Accuracy gate threshold = mAP50 - 0.05. TODO: replace with held-out TEST split numbers (run model.val(split='test')) and with on-device TensorRT FP16 numbers.",
+  "note": "Baseline from Kaggle training 2026-06-11 (Tesla T4, 76 epochs, best@56). Weights downloaded to models/. Accuracy gate threshold = mAP50 - 0.05. TODO: replace with held-out TEST split numbers (model.val(split='test')) and with on-device TensorRT FP16 numbers.",
   "accuracy_gate": {
     "metric": "mAP50",
     "baseline": 0.731,
@@ -26,7 +28,7 @@
       "4_general_waste":   {"mAP50": 0.754, "precision": 0.786, "recall": 0.750}
     }
   },
-  "speed_ms_per_image_T4": {"preprocess": 0.2, "inference": 11.9, "postprocess": 0.2},
+  "speed_ms_per_image_T4": {"preprocess": 0.2, "inference": 11.3, "postprocess": 0.2},
   "last_updated": "2026-06-11",
   "updated_by": "waste_sorter_v6 (Kaggle T4, 76 epochs)"
 }

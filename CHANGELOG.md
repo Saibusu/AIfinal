@@ -5,6 +5,14 @@
 
 ## [Unreleased]
 
+### Added (model artifacts)
+- **best_v6 權重下載並歸檔**：`models/best_v6.pt`(42MB) + `models/best_v6.onnx`(77.9MB, opset 12, imgsz 416)
+  - 兩檔 gitignored（device-bound + 大檔，不入版控）；新增 `models/README.md` 模型卡（mAP/速度/取得方式/engine 編譯）
+  - 重跑成功（非中斷）：76 epochs、best @ epoch 56、mAP@50=0.7305687620379155
+  - 解鎖 Yahboom 端 TensorRT engine 編譯與整合測試（先前 entrypoint 假設 onnx 存在的依賴已備齊）
+- **accuracy_baseline.json 修正**：`imgsz` 640→**416**（與 ONNX 匯出一致）、inference 11.9→**11.3ms**、
+  加上 `best_epoch=56` 與 `weights` 路徑；數據（驗證 split）維持 mAP50=0.731
+
 ### Fixed (CI)
 - **CI test job 紅燈：`ModuleNotFoundError: No module named 'fastapi'`**（自 CI #11 起）
   - 根因：dashboard 單元測試在 collection 時 import `fastapi`（經 `src/dashboard_server.py`），

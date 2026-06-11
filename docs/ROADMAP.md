@@ -46,7 +46,8 @@
 - [x] `data/held-out/`（🟡 空，待放 546 張 test set）
 - [x] `scripts/parse_tegrastats.py`（SPEC-006，TDD，11 tests/100%；實機抓 log 後 PC 轉 CSV）
 - [ ] `report/`：FINAL_REPORT.pdf, PRESENTATION.pdf, DEMO.mp4/DEMO_LINK.md
-- [x] `accuracy_baseline.json`（🟡 數值 null，待 Kaggle）
+- [x] `accuracy_baseline.json`（✅ 填入 validation 數據 mAP50=0.731；test split 待補）
+- [x] `models/`（✅ best_v6.pt/onnx 已下載歸檔，gitignored；含 model card README）
 - [x] `pyproject.toml`
 - [x] `Dockerfile` + `.dockerignore` + `docker-entrypoint.sh`（engine 編譯在 entrypoint）✅
 - [x] `README.md`
@@ -151,5 +152,6 @@ DAG：`lint → test ┐ / security-scan ┘ → build → integration-test`
 ## 外部依賴（阻擋項）
 
 - ✅ Kaggle v6 訓練結果 → mAP@50=0.731，已填 accuracy_baseline（validation；test split 待補）
+- ✅ **best_v6.pt / best_v6.onnx 已下載**，歸檔於 `models/`（gitignored）→ 解鎖 Yahboom engine 編譯
 - ⏳ Yahboom 硬體到位 → GPIO 實測、整合測試、Docker on Jetson、tegrastats、on-device mAP/FPS
 - ⏳ Self-hosted runner 註冊 → integration-test job

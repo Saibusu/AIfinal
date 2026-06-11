@@ -55,12 +55,21 @@
 > (3) 報告 §5 優化歷程要的是「部署端優化」（TensorRT 精度/解析度/frame-skip），非訓練調參；
 > (4) 時程緊（剩 8 天），優先把模型拿回，精力留給硬體/Docker/CI/報告/Demo。
 
-## 待辦
+## ✅ 重跑完成並下載（2026-06-11 晚）
 
-- [ ] **重跑**：用修正後的 train_waste_sorter_v6.ipynb（Cell 6 已修 best.pt 路徑），原參數，勿中途 Cancel
-- [ ] 補跑 test split（546 張）的 mAP → 更新 baseline 為 test 數據
-- [ ] 下載 best_v6.pt / best_v6.onnx
-- [ ] 在 Yahboom 上轉 TensorRT FP16 engine 並實測 FPS / mAP（on-device 數據才是報告 §6 最終值）
+- **重跑成功**（非中斷）：76 epochs、best @ epoch 56、11.13 小時、mAP@50 = **0.7305687620379155**
+- **ONNX 匯出成功**：`best_v6.onnx`（opset 12, imgsz 416, input (1,3,416,416), output (1,300,6), 77.9 MB）
+- **權重已下載並歸檔**至 `models/`：`best_v6.pt`（42MB）、`best_v6.onnx`（77.9MB）
+  → 兩檔 gitignored（device-bound，不入版控；見 `models/README.md`）
+- ⚠️ notebook 最後一格 `shutil.copy` 報 `SameFileError`（複製到同路徑）— **無害**，
+  匯出已成功、檔案已存在；可選擇性修 notebook（移除多餘 copy）
+
+## 待辦（剩硬體相依）
+
+- [x] ~~重跑~~ ✅　[x] ~~下載 best_v6.pt / best_v6.onnx~~ ✅
+- [ ] 補跑 test split（546 張）的 mAP → 更新 baseline 的 metric_source（PC 可做：`model.val(split='test')`）
+- [ ] 在 Yahboom 上轉 TensorRT FP16 engine 並實測 FPS / mAP（on-device 數據 = 報告 §6 最終值）
+- [ ] 驗證 ONNX opset12 advanced-indexing 警告不影響偵測（實機 sanity check）
 - [ ] 塑膠袋弱點 → 寫入報告 §6/§7（防呆機制接住：低信心→一般垃圾）
 
 > 無論 mAP 數值為何，模型版本決策已定（v6），不因數值回頭改用 v5。
