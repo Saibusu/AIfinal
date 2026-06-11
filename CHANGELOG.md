@@ -6,6 +6,10 @@
 ## [Unreleased]
 
 ### Added (modules)
+- **ActuatorController (SPEC-002, TDD)**：`src/actuator_controller.py`，Act 階段 GPIO LED 控制
+  - Yahboom BOARD 針腳（11/13/15/21/23）、互斥點燈、auto-off timer、無效 class→一般垃圾、env 針腳覆蓋
+  - Jetson.GPIO lazy import + 注入 mock；timer_factory 注入避免測試 sleep；9 tests，覆蓋率 100%
+  - ✅ Sense→Process→Decide→Act 軟體鏈到齊（InferenceNode→DecisionEngine→ActuatorController + MqttPublisher）
 - **MqttPublisher (SPEC-005, TDD)**：`src/mqtt_publisher.py`，發布 detection/status 到 MQTT
   - JSON schema 驗證、publish 重試、topic prefix；paho client 可注入（測試不連 broker）
   - 8 tests，覆蓋率 100%；滿足 CAPSTONE §B.5「MQTT 訊息測試」類別
