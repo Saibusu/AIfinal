@@ -48,8 +48,16 @@
 > 存檔路徑 `runs/detect/runs/train/waste_sorter_v6`（ultralytics 自動加 runs/detect）—
 > 即先前 FileNotFoundError 主因，已用 `model.trainer.best` 修正。
 
+## 重跑決策（2026-06-11）
+
+> 中斷 run 的 0.731 模型未救回 → 需重跑。**決定：原參數重跑，不調參**。
+> 理由：(1) 原參數已驗證產出 0.731 > 目標 0.65；(2) 塑膠袋弱點為資料本質、調參效益不確定且耗 11.6h；
+> (3) 報告 §5 優化歷程要的是「部署端優化」（TensorRT 精度/解析度/frame-skip），非訓練調參；
+> (4) 時程緊（剩 8 天），優先把模型拿回，精力留給硬體/Docker/CI/報告/Demo。
+
 ## 待辦
 
+- [ ] **重跑**：用修正後的 train_waste_sorter_v6.ipynb（Cell 6 已修 best.pt 路徑），原參數，勿中途 Cancel
 - [ ] 補跑 test split（546 張）的 mAP → 更新 baseline 為 test 數據
 - [ ] 下載 best_v6.pt / best_v6.onnx
 - [ ] 在 Yahboom 上轉 TensorRT FP16 engine 並實測 FPS / mAP（on-device 數據才是報告 §6 最終值）
