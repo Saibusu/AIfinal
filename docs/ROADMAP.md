@@ -44,7 +44,7 @@
 - [ ] `deploy/`：docker-compose.yml, deploy.sh, healthcheck.sh, rollback.sh
 - [x] `calibration/`（➖ FP16 不需 INT8，README 已說明）
 - [x] `data/held-out/`（🟡 空，待放 546 張 test set）
-- [ ] `scripts/parse_tegrastats.py`
+- [x] `scripts/parse_tegrastats.py`（SPEC-006，TDD，11 tests/100%；實機抓 log 後 PC 轉 CSV）
 - [ ] `report/`：FINAL_REPORT.pdf, PRESENTATION.pdf, DEMO.mp4/DEMO_LINK.md
 - [x] `accuracy_baseline.json`（🟡 數值 null，待 Kaggle）
 - [x] `pyproject.toml`
@@ -134,6 +134,7 @@ DAG：`lint → test ┐ / security-scan ┘ → build → integration-test`
 | MqttPublisher | SPEC-005 ✅ | ✅ | ✅ 8 tests/100% | G4 ✅ |
 | ActuatorController | SPEC-002 ✅ | ✅ | ✅ 9 tests/100% | G4 ✅ |
 | DashboardServer | SPEC-003 ✅ | ✅ | ✅ 10 tests/100% | G4 ✅ |
+| TegrastatsParser | SPEC-006 ✅ | ✅ | ✅ 11 tests/100% | G4 ✅ |
 
 ---
 

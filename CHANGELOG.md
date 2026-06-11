@@ -6,6 +6,10 @@
 ## [Unreleased]
 
 ### Added (modules)
+- **TegrastatsParser (SPEC-006, TDD)**：`src/tegrastats_parser.py` + `scripts/parse_tegrastats.py`(CLI)
+  - tegrastats.log → utilization.csv + avg/max 摘要（報告 §6 / B.8 artifacts；B.1 結構要求）
+  - 相容 POM(JetPack5)/VDD(Orin) 電源命名、`off` 核略過、可選時間戳前綴、雜訊行略過
+  - 純文字解析無硬體相依；11 tests，模組覆蓋率 100%；bandit 零發現
 - **DashboardServer (SPEC-003, TDD)**：`src/dashboard_server.py`，FastAPI + WebSocket 即時監控
   - `/health`、`/`(HTML)、`/video_feed`(MJPEG multipart)、`/ws`(推播 detection/fps events)
   - `ConnectionManager`：多客戶端 broadcast、斷線客戶端靜默移除；攝影機離線 → /video_feed 503
