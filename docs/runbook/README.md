@@ -40,7 +40,17 @@ gst-launch-1.0 nvarguscamerasrc ! nvvidconv ! xvimagesink
 ```
 
 ### 4. Self-hosted runner 註冊（ADR-003）
-> 待 CI build job 完成後補上（參考 HW6 Step 0.0 Option C）
+CI build job 已完成（`.github/workflows/ci.yml` 的 `integration-test` job，labels
+`[self-hosted, linux, ARM64, jetson]`）。在 Yahboom 上註冊 runner：
+```bash
+# GitHub repo → Settings → Actions → Runners → New self-hosted runner (Linux ARM64)
+mkdir actions-runner && cd actions-runner
+curl -o runner.tar.gz -L <下載連結>   # 依頁面指示
+tar xzf runner.tar.gz
+./config.sh --url https://github.com/Saibusu/AIfinal --token <TOKEN> \
+  --labels jetson --name yahboom
+./run.sh        # 顯示 Idle 後，push 到 master 會觸發 integration-test
+```
 
 ### 5. tegrastats 抓數據（報告 §6 / B.8）
 ```bash
@@ -49,7 +59,21 @@ sudo tegrastats --interval 1000 --logfile tegrastats.log
 ```
 
 ### 6. Docker 實跑（B.3）
-> 待 Dockerfile 完成後補上 `docker pull` / `docker run --runtime nvidia`
+Dockerfile + compose 已完成。在 Yahboom 上（先把 `best_v6.onnx`/`.engine` 放到 `models/`）：
+```bash
+# 方式 A：compose 一鍵（engine 不存在時 entrypoint 會自動 trtexec 編譯）
+cd deploy && IMAGE_REF=ghcr.io/saibusu/aifinal:latest docker compose up -d
+./healthcheck.sh                      # 等 /health 回 200
+# 瀏覽器開 http://<jetson-ip>:8000 看即時畫面 + 偵測事件 + FPS
+
+# 方式 B：直接 docker run
+docker run --runtime nvidia --rm -p 8000:8000 \
+  -v $PWD/models:/app/models \
+  -v /tmp/argus_socket:/tmp/argus_socket \
+  --device /dev/gpiochip0 \
+  ghcr.io/saibusu/aifinal:latest
+```
+> 影像由 CI build job 推上 GHCR；首次需 `docker login ghcr.io`（若 package 設私有）。
 
 ---
 

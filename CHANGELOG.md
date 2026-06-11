@@ -5,7 +5,20 @@
 
 ## [Unreleased]
 
-### Added (modules)
+### Added (runtime + containerization)
+- **PipelineOrchestrator (SPEC-007, TDD)**：`src/pipeline_orchestrator.py`，串起完整迴路
+  - frame → InferenceNode(Sense+Process+Decide) → ActuatorController(Act) → MqttPublisher → on_event(Dashboard)
+  - rolling FPS、最新 JPEG 幀供 Dashboard；三 sink 各自容錯（單一失敗不終止迴圈）；run() 迴圈以 max_frames/None-frame 終止
+  - 五模組全注入 → 13 tests，模組覆蓋率 100%（無相機/GPIO/模型/broker 相依）
+- **src/app.py（執行進入點）**：單一進程 = uvicorn 服務 DashboardServer（主執行緒）+ 背景 thread 跑 orchestrator
+  - on_event 經 `loop.call_soon_threadsafe` 跨執行緒推播；env 設定 MODEL_PATH/CAMERA_SOURCE/MQTT_BROKER/DASHBOARD_*
+  - 屬硬體/事件迴圈 glue，coverage omit（實機驗證）；新增 `InferenceNode.load()`（僅載入模型，由 orchestrator 驅動讀幀）
+- **容器化（ADR-003）**：`Dockerfile`（arm64 jetpack6 base）+ `.dockerignore` + `docker-entrypoint.sh`
+  - TensorRT FP16 engine 在 entrypoint 編譯（需裝置 GPU，非 build 階段）；HEALTHCHECK 打 /health；deps 釘到 major
+  - `deploy/`：docker-compose.yml（單一 service、runtime nvidia、GPIO/CSI/argus mount）、deploy.sh、healthcheck.sh、rollback.sh(<30s)
+- **CI 補滿 5-stage（ADR-003）**：`.github/workflows/ci.yml`
+  - 新增 **security-scan**（bandit medium gate + pip-audit）、**build**（buildx arm64 → GHCR :latest + :sha，GHA cache，push 才推）、**integration-test**（self-hosted jetson；`tests/integration/` 煙霧測試，hosted 端 skip）
+  - DAG：lint ─┬ test ┐／└ security-scan ┘→ build → integration-test
 - **TegrastatsParser (SPEC-006, TDD)**：`src/tegrastats_parser.py` + `scripts/parse_tegrastats.py`(CLI)
   - tegrastats.log → utilization.csv + avg/max 摘要（報告 §6 / B.8 artifacts；B.1 結構要求）
   - 相容 POM(JetPack5)/VDD(Orin) 電源命名、`off` 核略過、可選時間戳前綴、雜訊行略過

@@ -135,6 +135,15 @@ class InferenceNode:
 
         return cv2.VideoCapture(self.camera_source, cv2.CAP_GSTREAMER)
 
+    def load(self) -> None:  # pragma: no cover - needs ultralytics + weights
+        """Load the model without starting the capture loop.
+
+        Used by the app entrypoint when the PipelineOrchestrator (not this
+        node's own `start()` loop) drives frame reading.
+        """
+        if self._model is None:
+            self._model = self._load_model()
+
     def start(self) -> None:  # pragma: no cover - hardware loop, verified on Yahboom
         if self._model is None:
             self._model = self._load_model()

@@ -1,0 +1,9 @@
+# Force LF on files executed on the Yahboom/Linux side — CRLF would break the
+# shebang (`#!/usr/bin/env bash\r`) and the container entrypoint.
+*.sh        text eol=lf
+*.py        text eol=lf
+*.yml       text eol=lf
+*.yaml      text eol=lf
+Dockerfile  text eol=lf
+.dockerignore text eol=lf
+docker-entrypoint.sh text eol=lf

@@ -1,0 +1,32 @@
+# Copyright (c) 2026 李軒杰, 黃義鈞
+# Datung University — I4210 AI實務專題
+#
+# One-command demo on Yahboom (Jetson). Single service: orchestrator + Dashboard.
+#   cd deploy && docker compose up -d
+# Requires the NVIDIA container runtime and a model under ./models (engine is
+# compiled on first run by the entrypoint).
+
+services:
+  waste-sorter:
+    image: ${IMAGE_REF:-ghcr.io/saibusu/aifinal:latest}
+    container_name: waste-sorter
+    runtime: nvidia            # NVIDIA container runtime (TensorRT / GPU)
+    restart: unless-stopped
+    ports:
+      - "8000:8000"            # Dashboard (MJPEG + WebSocket + /health)
+    environment:
+      MODEL_PATH: /app/models/best_v6.engine
+      ONNX_PATH: /app/models/best_v6.onnx
+      CAMERA_SOURCE: ${CAMERA_SOURCE:-}   # empty → default CSI GStreamer pipeline
+      MQTT_BROKER: ${MQTT_BROKER:-}       # empty → MQTT disabled
+    volumes:
+      - ../models:/app/models             # model weights / compiled engine
+      - /tmp/argus_socket:/tmp/argus_socket   # CSI IMX219 (nvargus daemon)
+    devices:
+      - /dev/gpiochip0:/dev/gpiochip0     # GPIO LEDs (BOARD pins, ADR-002)
+    healthcheck:
+      test: ["CMD", "python3", "-c", "import urllib.request,sys; sys.exit(0 if urllib.request.urlopen('http://localhost:8000/health').status==200 else 1)"]
+      interval: 30s
+      timeout: 5s
+      start_period: 60s
+      retries: 3
